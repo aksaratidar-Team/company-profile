@@ -21,7 +21,10 @@ export function SiteFooter({ siteName, settings }: SiteFooterProps) {
     <footer id={sectionIds.contact} className="scroll-mt-16 bg-tech-dark text-white">
       <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 py-16 sm:grid-cols-2 sm:px-6 lg:grid-cols-[1.6fr_1fr_1fr] lg:gap-16 lg:px-8">
         <div className="flex flex-col gap-6 sm:col-span-2 lg:col-span-1">
-          <SiteLogo name={siteName} logoUrl={settings?.company_logo ?? null} />
+          <div className="flex flex-col gap-2">
+            <SiteLogo name={siteName} logoUrl={settings?.company_logo ?? null} />
+            <p className="text-xs font-medium tracking-wide text-slate-400">{siteConfig.legalName}</p>
+          </div>
           <p className="max-w-sm text-sm leading-relaxed text-slate-400">{tagline}</p>
           <SocialLinks
             links={settings?.social_media ?? []}
@@ -56,7 +59,7 @@ export function SiteFooter({ siteName, settings }: SiteFooterProps) {
       <div className="border-t border-white/10">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 text-sm text-slate-400 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p>
-            © {year} {siteName}. Seluruh hak cipta dilindungi.
+            © {year} {siteConfig.legalName}. Seluruh hak cipta dilindungi.
           </p>
           <ul className="flex gap-6">
             {legalLinks.map((link) => (

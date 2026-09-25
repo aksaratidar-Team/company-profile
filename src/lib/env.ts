@@ -2,6 +2,8 @@ import { z } from "zod";
 
 const serverEnvSchema = z.object({
   API_BASE_URL: z.url(),
+  // Optional: content of Google Search Console's HTML-tag verification.
+  GOOGLE_SITE_VERIFICATION: z.string().trim().min(1).optional(),
 });
 
 const publicEnvSchema = z.object({
@@ -12,6 +14,7 @@ const publicEnvSchema = z.object({
 export function getServerEnv(): z.infer<typeof serverEnvSchema> {
   return serverEnvSchema.parse({
     API_BASE_URL: process.env.API_BASE_URL,
+    GOOGLE_SITE_VERIFICATION: process.env.GOOGLE_SITE_VERIFICATION || undefined,
   });
 }
 

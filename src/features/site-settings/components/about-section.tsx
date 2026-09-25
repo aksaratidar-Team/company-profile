@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, CircleCheck } from "lucide-react";
+import { ArrowRight, Building2, CircleCheck } from "lucide-react";
 
 import { Section } from "@/components/shared/section";
 import { SectionHeading } from "@/components/shared/section-heading";
@@ -23,6 +23,14 @@ export function AboutSection({ aboutText }: AboutSectionProps) {
             description={aboutText ?? siteConfig.fallbackDescription}
             align="left"
           />
+
+          <p className="-mt-3 flex items-center gap-2 text-sm text-slate-600">
+            <Building2 aria-hidden="true" className="size-4 shrink-0 text-tech-cyan" />
+            <span>
+              Dikelola oleh{" "}
+              <span className="font-semibold text-tech-dark">{siteConfig.legalName}</span>
+            </span>
+          </p>
 
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {highlights.map((item) => (

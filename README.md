@@ -22,9 +22,10 @@ Frontend publik website company profile **Aksara Tidar**. Aplikasi ini hanya **m
 10. [Konfigurasi Konten Statis](#konfigurasi-konten-statis)
 11. [Design System](#design-system)
 12. [Gambar](#gambar)
-13. [Konvensi Kode](#konvensi-kode)
-14. [Deploy](#deploy)
-15. [Keterbatasan & TODO](#keterbatasan--todo)
+13. [SEO](#seo)
+14. [Konvensi Kode](#konvensi-kode)
+15. [Deploy](#deploy)
+16. [Keterbatasan & TODO](#keterbatasan--todo)
 
 ---
 
@@ -296,6 +297,7 @@ Konten yang **tidak** dikelola CMS ada di `src/config/site.ts`:
 |---|---|
 | `sectionIds` | ID anchor setiap section (`beranda`, `tentang`, `aktivitas`, `proyek`, `tim`, `testimoni`, `kontak`). |
 | `fallbackName`, `fallbackDescription` | Dipakai saat `site-settings` di CMS kosong. |
+| `legalName` | Nama badan hukum (`PT Aksara Tidar Digital Inovasi`). Tampil di footer (di bawah logo dan di baris hak cipta), di section Tentang Kami ("Dikelola oleh …"), dan di data terstruktur SEO (`organization-json-ld.tsx`, schema.org `Organization.legalName`). |
 | `navLinks` | Menu navbar. |
 | `footer` | `tagline`, `navLinks`, dan `legalLinks` di footer. |
 | `hero` | `eyebrow`, `headline` (`before` / `highlight` / `after`), `subheadline`, dan `stats`. |
@@ -341,6 +343,25 @@ Aturan:
   - **Selalu:** `https://<host API_BASE_URL>/storage/**`, yaitu upload dari CMS, tanpa query string.
   - **Hanya `next dev`:** `https://images.unsplash.com/**`, dipakai oleh data mock.
 - Gambar statis ada di `public/images/`, contohnya `about-team.jpg` untuk section Tentang Kami.
+
+---
+
+## SEO
+
+| Bagian | File | Isi |
+|---|---|---|
+| Metadata halaman | `src/app/layout.tsx`, `src/app/page.tsx` | `<title>`, description, keywords, canonical, Open Graph, Twitter/X card, robots, author/publisher, verifikasi Google |
+| Teks SEO | `src/config/site.ts` → `seo` | `titleSuffix`, `description`, `keywords` |
+| Gambar pratinjau | `src/app/opengraph-image.tsx` | Gambar 1200×630 saat link dibagikan |
+| Ikon | `src/app/icon.tsx`, `src/app/apple-icon.tsx` | Favicon (juga tampil di hasil Google) dan ikon iOS |
+| Peta situs | `src/app/sitemap.ts` → `/sitemap.xml` | Didaftarkan ke Google Search Console |
+| Robots | `src/app/robots.ts` → `/robots.txt` | Izinkan semua crawler + lokasi sitemap |
+| Manifest | `src/app/manifest.ts` → `/manifest.webmanifest` | Nama, warna tema, ikon |
+| Data terstruktur | `components/layout/organization-json-ld.tsx`, `features/site-settings/components/faq-section.tsx` | schema.org `Organization`, `WebSite`, `FAQPage` |
+| Konten | Section Layanan & FAQ (`siteConfig.services`, `siteConfig.faq`) | Teks yang menjelaskan apa itu Aksara Tidar |
+
+- `NEXT_PUBLIC_SITE_URL` **wajib** diisi domain asli di production; canonical, sitemap, robots, dan data terstruktur memakainya.
+- `GOOGLE_SITE_VERIFICATION` (opsional): nilai `content` dari tag HTML verifikasi Google Search Console.
 
 ---
 
